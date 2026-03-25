@@ -62,6 +62,10 @@ class Parser(object):
             '-r', '--repeat',
             action='store_true',
             help='repeat on failure')
+        self._parser.add_argument(
+            '-x', '--execute',
+            action='store_true',
+            help='run corrected command directly (for non-shell contexts)')
 
     def _prepare_arguments(self, argv):
         """Prepares arguments by:

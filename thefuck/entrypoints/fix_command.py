@@ -1,5 +1,6 @@
 from pprint import pformat
 import os
+import subprocess
 import sys
 from difflib import SequenceMatcher
 from .. import logs, types, const
@@ -43,6 +44,11 @@ def fix_command(known_args):
         selected_command = select_command(corrected_commands)
 
         if selected_command:
-            selected_command.run(command)
+            if getattr(known_args, 'execute', False):
+                logs.show_corrected_command(selected_command)
+                sys.exit(subprocess.call(
+                    selected_command.script, shell=True))
+            else:
+                selected_command.run(command)
         else:
             sys.exit(1)
